@@ -1,0 +1,111 @@
+# Cleverest
+
+Cleverest is a feedback-directed, zero-shot LLM-based regression test generation technique proposed in the paper "[Paper Title]". We evaluate its effectiveness on 22 commits to three subject programs: Mujs, Libxml2, and Poppler. This repository contains the implementation of Cleverest along with the dataset and instructions to reproduce the main results in the paper.
+
+## Citation
+
+If you want to use Cleverest in your research or refer it, please use the following citation:
+
+```bibtex
+[bibtext]
+```
+
+The full paper is available at [INSERT](INSERT).
+
+## Setup
+
+The system is tested on Docker container [aflplusplus/aflplusplus:v4.21c](https://hub.docker.com/layers/aflplusplus/aflplusplus/v4.21c/images/sha256-2c445346a9f5c4e321a08c5d3ae77282ca61ad332dd2ddb7683a724f91d0e136) running Ubuntu 22.04, with following dependencies installed:
+
+```bash
+# necessary dependencies for Cleverest to run
+apt-get install -y curl gawk jq tmux
+# dependencies for building mujs, libxml2, and poppler
+apt-get install -y libreadline-dev libfreetype-dev libfontconfig-dev libnss3-dev libtiff-dev
+```
+
+You will need to specify OpenAI API key in environment variable before running experiments, or set it in `openai` Bash script.
+
+```bash
+export OPEN_AI_API_KEY=your_api_key
+```
+
+Before running full experiments, you can run a very basic test for only one [bug-introducing commit 8c27b12](https://github.com/ccxvii/mujs/commit/8c27b12) of MuJS with only one LLM query by running the following command:
+
+```bash
+# $conf is the file containing information about program and commit under test
+export conf=mujs1.env
+MAX_ITER=1 ./run.sh $conf
+```
+
+The script should take less than 20 seconds to execute and print some debug information. If Cleverest successfully found the bug, you should see "Bug triggered after commit 8c27b12" along with some AddressSanitizer output.
+
+You should also get a text file prexied by `SUMMARY_` and a folder prefixed by `exp_` in current directory. The `SUMMARY_*` file contains the configuration of experiment and the result for each commit in a table format. The `exp_*` folder contains full history of interacting with LLM (`chat_*.log`), all generated test cases (`INPUT_*`), non-trival test cases that trigger bugs, cause output difference or reach commit-changed code (`TRIGGER_*`) and other useful intermediate files.
+
+## Build Subject Programs
+
+Even though `run.sh` will automatically build the subject programs if they do not exist, it's recommended to build them before running experiments to accurately measure the execution time needed by Cleverest. You can build all subject programs for commits under test by running the following command:
+
+```bash
+export conf=mujs.env  # or libxml2.env, poppler.env
+SCENARIO=BIC ./b.sh $conf
+SCENARIO=FIX ./b.sh $conf
+```
+
+## Reproducing Results
+
+TODO:
+- explanation for instructions and expected results
+- easy to run 5 repetition for 2 scenarios
+- instruction for ClevFuzz (run fuzzing for 24h)
+- instructions for WAFLGo
+- scripts for validate and parse result to table
+
+### RQ1: Evaluation of Capabilities
+
+Run the following command to run experiment under default setting:
+
+```bash
+./run.sh $conf
+# same as setting the default configuration
+SCENARIO=BIC GIT_INFO=FULL MAX_ITER=5 LLM_TEMP=0.5 LLM=gpt-4o ./run.sh $conf
+```
+
+### RQ2: Ablation Study
+
+#### Commit Information
+
+```
+GIT_INFO=MSGONLY ./run.sh $conf
+GIT_INFO=DIFFONLY ./run.sh $conf
+```
+
+#### Task Difficulty
+
+```
+GENCMD=1 ./run.sh $conf
+```
+
+#### Feedback Utility
+
+```
+NOFEEDBACK=1 ./run.sh $conf
+```
+
+#### Number of Iterations
+
+```
+MAX_ITER=10 ./run.sh $conf
+```
+
+#### LLM Module
+
+
+```
+LLM_TEMP=1.0 ./run.sh $conf
+
+LLM=gpt-4o-mini ./run.sh $conf
+```
+
+### RQ3: Comparison to the State-of-the-Art
+
+TODO
