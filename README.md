@@ -12,7 +12,13 @@ If you want to use Cleverest in your research or refer it, please use the follow
 
 The full paper is available at [INSERT](INSERT).
 
-## Setup
+## Data Replication
+
+In the paper, we run experiments on 3 software (mujs, libxml2, poppler) for 2 scenarios (bug-finding and bug-fixing) under 8 different ablation settings (default, MSGONLY, DIFFONLY, GENCMD, TEMP1.0, gpt-4o-mini, ITER10, NOFEEDBACK) and repeat 5 times. So each software has 80 experiments (except that mujs has only 70, where the program doesn't have CLI options to test so GENCMD is not needed).
+
+The data of experiments in the paper is available at `repdata.zip`. For each software, there are 80 (70 for mujs) text files prexied by `SUMMARY_` and folders prefixed by `exp_`. The `SUMMARY_*` file contains the configuration of a experiment and the result for each commit in a table format. The `exp_*` folder contains intemidiate data containing full history of interacting with LLM (`chat_*.log`), all generated test cases (`INPUT_*`), non-trival test cases that trigger bugs, cause output difference or reach commit-changed code (`TRIGGER_*`) and other useful intermediate files.
+
+## Evaluation Setup
 
 The system is tested on Docker container [aflplusplus/aflplusplus:v4.21c](https://hub.docker.com/layers/aflplusplus/aflplusplus/v4.21c/images/sha256-2c445346a9f5c4e321a08c5d3ae77282ca61ad332dd2ddb7683a724f91d0e136) running Ubuntu 22.04, with following dependencies installed:
 
