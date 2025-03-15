@@ -1,6 +1,6 @@
 # Cleverest
 
-Cleverest is a feedback-directed, zero-shot LLM-based regression test generation technique proposed in the paper "[Paper Title]". We evaluate its effectiveness on 22 commits to three subject programs: Mujs, Libxml2, and Poppler. This repository contains the implementation of Cleverest along with the dataset and instructions to reproduce the main results in the paper.
+Cleverest is a feedback-directed, zero-shot LLM-based regression test generation technique proposed in the paper "[Paper Title]". We evaluate its effectiveness on 46 commits of six subject programs: three already in WAFLGo dataset (Mujs, Libxml2, and Poppler) and three newly added programs (JerryScript, Z3, PHP). This repository contains the implementation of Cleverest along with the dataset and instructions to reproduce the main results in the paper.
 
 ## Citation
 
@@ -14,9 +14,9 @@ The full paper is available at [INSERT](INSERT).
 
 ## Data Replication
 
-In the paper, we run experiments on 3 software (mujs, libxml2, poppler) for 2 scenarios (bug-finding and bug-fixing) under 8 different ablation settings (default, MSGONLY, DIFFONLY, GENCMD, TEMP1.0, gpt-4o-mini, ITER10, NOFEEDBACK) and repeat 5 times. So each software has 80 experiments (except that mujs has only 70, where the program doesn't have CLI options to test so GENCMD is not needed).
+In the paper, we run experiments on 6 software (mujs, libxml2, poppler, jerryscript, z3, php) for 2 scenarios (bug-finding and bug-reproduction) under 9 different ablation settings (default, MSGONLY, DIFFONLY, GENCMD, TEMP1.0, gpt-4o-mini, deepseek-r1, ITER10, NOFEEDBACK) and repeat 5 times. Each software has 80 experiments (90 for libxml2 and poppler becuase only these two have CLI options to test with GENCMD).
 
-The data of experiments in the paper is available at `repdata.zip`. For each software, there are 80 (70 for mujs) text files prexied by `SUMMARY_` and folders prefixed by `exp_`. The `SUMMARY_*` file contains the configuration of a experiment and the result for each commit in a table format. The `exp_*` folder contains intemidiate data containing full history of interacting with LLM (`chat_*.log`), all generated test cases (`INPUT_*`), non-trival test cases that trigger bugs, cause output difference or reach commit-changed code (`TRIGGER_*`) and other useful intermediate files.
+The data of experiments in the paper is available at `repdata.zip`. For each software, there are 80 (90 for libxml2 and poppler) text files prexied by `SUMMARY_` and folders prefixed by `exp_`. The `SUMMARY_*` file contains the configuration of a experiment and the result for each commit in a table format. The `exp_*` folder contains intemidiate data containing full history of interacting with LLM (`chat_*.log`), all generated test cases (`INPUT_*`), non-trival test cases that trigger bugs, cause output difference or reach commit-changed code (`TRIGGER_*`) and other useful intermediate files.
 
 ## Evaluation Setup
 
@@ -32,7 +32,7 @@ apt-get install -y libreadline-dev libfreetype-dev libfontconfig-dev libnss3-dev
 You will need to specify OpenAI API key in environment variable before running experiments, or set it in `openai` Bash script.
 
 ```bash
-export OPEN_AI_API_KEY=your_api_key
+export OPENAI_API_KEY=your_api_key
 ```
 
 Before running full experiments, you can run a very basic test for only one [bug-introducing commit 8c27b12](https://github.com/ccxvii/mujs/commit/8c27b12) of MuJS with only one LLM query by running the following command:
@@ -52,9 +52,9 @@ You should also get a text file prexied by `SUMMARY_` and a folder prefixed by `
 Even though `run.sh` will automatically build the subject programs if they do not exist, it's recommended to build them before running experiments to accurately measure the execution time needed by Cleverest. You can build all subject programs for commits under test by running the following command:
 
 ```bash
-export conf=mujs.env  # or libxml2.env, poppler.env
-SCENARIO=BIC ./b.sh $conf
-SCENARIO=FIX ./b.sh $conf
+export conf=mujs.env  # or libxml2.env, poppler.env, jerryscript.env, z3.env, php.env
+SCENARIO=BIC ./b.sh $conf  # build bug-introducing commits for bug-finding scenario
+SCENARIO=FIX ./b.sh $conf  # build bug-fixing commits for bug-reproduction scenario
 ```
 
 ## Reproducing Results
@@ -73,7 +73,7 @@ SCENARIO=BIC GIT_INFO=FULL MAX_ITER=5 LLM_TEMP=0.5 LLM=gpt-4o ./run.sh $conf
 
 #### Prompt Synthesizer
 
-```
+```bash
 GIT_INFO=MSGONLY ./run.sh $conf
 GIT_INFO=DIFFONLY ./run.sh $conf
 GENCMD=1 ./run.sh $conf
@@ -81,14 +81,15 @@ GENCMD=1 ./run.sh $conf
 
 #### LLM Module
 
-```
+```bash
 LLM_TEMP=1.0 ./run.sh $conf
 LLM=gpt-4o-mini ./run.sh $conf
+LLM=deepseek-r1 ./run.sh $conf
 ```
 
 #### Execution Analyzer
 
-```
+```bash
 NOFEEDBACK=1 ./run.sh $conf
 MAX_ITER=10 ./run.sh $conf
 ```
