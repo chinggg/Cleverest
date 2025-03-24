@@ -1,0 +1,21 @@
+issue | commit | idx | status | final | first crash | time to find first crash
+65 | 833f82c | 240828-1935 | none | N |  | 
+65 | 833f82c | 240828-1940 | bug_SEGV^ | B | fuzzout_833f82c_before/default/crashes/id:000000,sig:11,src:001318,time:4192549,execs:287598,op:havoc,rep:3 | 4192549
+65 | 833f82c | 240828-1944 | bug_SEGV^ | B | fuzzout_833f82c_before/default/crashes/id:000000,sig:11,src:000001,time:206817,execs:19269,op:havoc,rep:1 | 206817
+65 | 833f82c | 240828-1948 | bug_SEGV^ | B | fuzzout_833f82c_before/default/crashes/id:000000,sig:11,src:000567+000101,time:1915221,execs:129749,op:splice,rep:2 | 1915221
+65 | 833f82c | 240828-2003 | bug_SEGV^ | B | fuzzout_833f82c_before/default/crashes/id:000000,sig:11,src:000003,time:108303,execs:6758,op:havoc,rep:1 | 108303
+141 | 6871e5b | 240828-1935 | bug_heap-buffer-overflow^ | B | fuzzout_6871e5b_before/default/crashes/id:000000,sig:06,src:001254,time:10853956,execs:689615,op:havoc,rep:4 | 10853956
+141 | 6871e5b | 240828-1940 | bug_heap-buffer-overflow^ | B | fuzzout_6871e5b_before/default/crashes/id:000000,sig:06,src:000000,time:17125,execs:1813,op:arith8,pos:48,val:-21 | 17125
+141 | 6871e5b | 240828-1944 | bug_heap-buffer-overflow^ | B | fuzzout_6871e5b_before/default/crashes/id:000000,sig:06,src:001317,time:6018308,execs:378030,op:havoc,rep:2 | 6018308
+141 | 6871e5b | 240828-1948 | bug_heap-buffer-overflow^ | B | fuzzout_6871e5b_before/default/crashes/id:000000,sig:06,src:001083,time:22323510,execs:1321387,op:havoc,rep:12 | 22323510
+141 | 6871e5b | 240828-2003 | bug_heap-buffer-overflow^ | B | fuzzout_6871e5b_before/default/crashes/id:000000,sig:06,src:001120,time:10800171,execs:638092,op:havoc,rep:2 | 10800171
+145 | f93d245 | 240828-1935 | bug_heap-buffer-overflow^ | B | fuzzout_f93d245_before/default/crashes/id:000000,sig:06,src:000001,time:73479,execs:9135,op:havoc,rep:1 | 73479
+145 | f93d245 | 240828-1940 | bug_global-buffer-overflow^ | B | fuzzout_f93d245_before/default/crashes/id:000000,sig:06,src:000003,time:14800,execs:1578,op:arith8,pos:30,val:-6 | 14800
+145 | f93d245 | 240828-1944 | bug_heap-buffer-overflow^ | B | fuzzout_f93d245_before/default/crashes/id:000000,sig:06,src:000000,time:290012,execs:25642,op:havoc,rep:9 | 290012
+145 | f93d245 | 240828-1948 | bug_heap-buffer-overflow^ | B | fuzzout_f93d245_before/default/crashes/id:000000,sig:06,src:000004,time:18396,execs:1370,op:flip32,pos:23 | 18396
+145 | f93d245 | 240828-2003 | bug_heap-buffer-overflow^ | B | fuzzout_f93d245_before/default/crashes/id:000000,sig:06,src:000001,time:535450,execs:31639,op:havoc,rep:1 | 535450
+166 | 8b5ba20 | 240828-1935 | bug_heap-use-after-free^ | B | fuzzout_8b5ba20_before/default/crashes/id:000000,sig:06,src:001746,time:13452114,execs:843353,op:havoc,rep:1 | 13452114
+166 | 8b5ba20 | 240828-1940 | none | N |  | 
+166 | 8b5ba20 | 240828-1944 | none | N |  | 
+166 | 8b5ba20 | 240828-1948 | none | N |  | 
+166 | 8b5ba20 | 240828-2003 | none | N |  | 

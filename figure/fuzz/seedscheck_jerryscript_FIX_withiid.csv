@@ -1,0 +1,5 @@
+issue | commit | # of files | # of (B,D,R,X,N) | final | first file | bug_types
+5013 | 3686410 | 19 | (0,0,0,2,17) | X | seeds/js/CVE-2016-10133 | bug_Aborted^Aborted:2 
+5138 | 95cc5e9 | 19 | (0,0,0,2,17) | X | seeds/js/CVE-2016-10133 | bug_Aborted^Aborted:2 
+5117 | d7e2125 | 19 | (0,0,1,2,0) | R | seeds/js/CVE-2016-10132 | bug_Aborted^Aborted:2 
+5153 | de51531 | 19 | (0,0,0,2,17) | X | seeds/js/CVE-2016-10133 | bug_Aborted^Aborted:2 

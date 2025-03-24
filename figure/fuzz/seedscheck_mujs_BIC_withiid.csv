@@ -1,0 +1,5 @@
+issue | commit | # of files | # of (B,D,R,X,N) | final | first file | bug_types
+65 | 8c27b12 | 19 | (0,0,0,0,19) | N |  | 
+141 | 832e069 | 19 | (0,0,0,19,0) | X |  | bug_heap-buffer-overflow^:19 
+145 | 4c7f6be | 19 | (0,0,0,0,19) | N |  | 
+166 | 3f71a1c | 19 | (1,0,18,0,0) | B | seeds_mujs/jsc_5.js | bug_^heap-use-after-free:1 

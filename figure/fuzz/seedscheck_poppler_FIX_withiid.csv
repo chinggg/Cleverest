@@ -1,0 +1,6 @@
+issue | commit | # of files | # of (B,D,R,X,N) | final | first file | bug_types
+1282 | 4564a00 | 100 | (0,0,99,0,1) | R | seeds_poppler/3-eledpar_mwe.pdf | 
+1289 | efb6868 | 100 | (0,0,100,0,0) | R | seeds_poppler/3-eledpar_mwe.pdf | 
+1303 | a4ca3a9 | 100 | (0,0,0,0,100) | N |  | 
+1305 | 907d05a | 100 | (0,0,1,0,99) | R | seeds_poppler/docs-boxshape.pdf | 
+1381 | 1be35ee | 100 | (0,0,4,0,96) | R | seeds_poppler/fithesis-fsps-color.pdf | 

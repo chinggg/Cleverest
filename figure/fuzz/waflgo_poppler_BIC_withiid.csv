@@ -1,0 +1,26 @@
+issue | commit | idx | final | time to find first crash in ms | first_crash
+1282 | 3d35d20 | 1 | B | 344849 | out_poppler_3d35d20_1/queue/id:000586,344849,src:000005,op:flip8,pos:10606,+cov
+1282 | 3d35d20 | 2 | B | 337084 | out_poppler_3d35d20_2/queue/id:000578,337084,src:000004,op:flip8,pos:10437,+cov
+1282 | 3d35d20 | 3 | B | 339520 | out_poppler_3d35d20_3/queue/id:000581,339520,src:000005,op:flip8,pos:10606,+cov
+1282 | 3d35d20 | 4 | B | 555113 | out_poppler_3d35d20_4/queue/id:000992,555113,src:000010,op:flip8,pos:402
+1282 | 3d35d20 | 5 | B | 338538 | out_poppler_3d35d20_5/queue/id:000569,338538,src:000004,op:flip8,pos:10437,+cov
+1289 | 3cae777 | 1 | X | 108165 | out_poppler_3cae777_1/crashes/id:000000,108165,sig:11,src:000000,op:flip8,pos:11287
+1289 | 3cae777 | 2 | X | 108305 | out_poppler_3cae777_2/crashes/id:000000,108305,sig:11,src:000000,op:flip8,pos:11287
+1289 | 3cae777 | 3 | X | 108255 | out_poppler_3cae777_3/crashes/id:000000,108255,sig:11,src:000000,op:flip8,pos:11287
+1289 | 3cae777 | 4 | X | 108183 | out_poppler_3cae777_4/crashes/id:000000,108183,sig:11,src:000000,op:flip8,pos:11287
+1289 | 3cae777 | 5 | X | 108338 | out_poppler_3cae777_5/crashes/id:000000,108338,sig:11,src:000000,op:flip8,pos:11287
+1303 | e674ca6 | 1 | N |  | 
+1303 | e674ca6 | 2 | N |  | 
+1303 | e674ca6 | 3 | N |  | 
+1303 | e674ca6 | 4 | N |  | 
+1303 | e674ca6 | 5 | N |  | 
+1305 | aaf2e80 | 1 | N |  | 
+1305 | aaf2e80 | 2 | N |  | 
+1305 | aaf2e80 | 3 | N |  | 
+1305 | aaf2e80 | 4 | N |  | 
+1305 | aaf2e80 | 5 | N |  | 
+1381 | 245abad | 1 | R | orig:fithesis-fsps-color.pdf | out_poppler_245abad_1/queue/id:000044,orig:fithesis-fsps-color.pdf
+1381 | 245abad | 2 | D | orig:fithesis-fsps-color.pdf | out_poppler_245abad_2/queue/id:000044,orig:fithesis-fsps-color.pdf
+1381 | 245abad | 3 | D | orig:fithesis-fsps-color.pdf | out_poppler_245abad_3/queue/id:000044,orig:fithesis-fsps-color.pdf
+1381 | 245abad | 4 | D | orig:fithesis-fsps-color.pdf | out_poppler_245abad_4/queue/id:000044,orig:fithesis-fsps-color.pdf
+1381 | 245abad | 5 | D | orig:fithesis-fsps-color.pdf | out_poppler_245abad_5/queue/id:000044,orig:fithesis-fsps-color.pdf

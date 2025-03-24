@@ -1,0 +1,26 @@
+issue | commit | idx | status | final | first crash | time to find first crash
+1282 | 3d35d20 | 240829-1146 | bug_^heap-use-after-free | B | fuzzout_3d35d20_after/default/crashes/id:000000,sig:06,src:000000,time:11944,execs:1001,op:quick,pos:244 | 11944
+1282 | 3d35d20 | 240829-1212 | bug_^heap-use-after-free | B | fuzzout_3d35d20_after/default/crashes/id:000000,sig:06,src:000003,time:183906,execs:10110,op:havoc,rep:2 | 183906
+1282 | 3d35d20 | 240829-1238 | bug_^heap-use-after-free | B | fuzzout_3d35d20_after/default/crashes/id:000000,sig:06,src:000002,time:11442,execs:920,op:quick,pos:213 | 11442
+1282 | 3d35d20 | 240829-1304 | bug_^heap-use-after-free | B | fuzzout_3d35d20_after/default/crashes/id:000000,sig:06,src:000002,time:288670,execs:16792,op:havoc,rep:3 | 288670
+1282 | 3d35d20 | 240829-1328 | bug_^heap-use-after-free | B | fuzzout_3d35d20_after/default/crashes/id:000000,sig:06,src:000003,time:13222,execs:1076,op:quick,pos:246 | 13222
+1289 | 3cae777 | 240829-1146 | none | N |  | 
+1289 | 3cae777 | 240829-1212 | bug_SEGV^SEGV | X |  | 
+1289 | 3cae777 | 240829-1238 | none | N |  | 
+1289 | 3cae777 | 240829-1304 | none | N |  | 
+1289 | 3cae777 | 240829-1328 | behave | D |  | 
+1303 | e674ca6 | 240829-1146 | none | N |  | 
+1303 | e674ca6 | 240829-1212 | none | N |  | 
+1303 | e674ca6 | 240829-1238 | none | N |  | 
+1303 | e674ca6 | 240829-1304 | none | N |  | 
+1303 | e674ca6 | 240829-1328 | none | N |  | 
+1305 | aaf2e80 | 240829-1146 | none | N |  | 
+1305 | aaf2e80 | 240829-1212 | none | N |  | 
+1305 | aaf2e80 | 240829-1238 | none | N |  | 
+1305 | aaf2e80 | 240829-1304 | none | N |  | 
+1305 | aaf2e80 | 240829-1328 | none | N |  | 
+1381 | 245abad | 240829-1146 | none | N |  | 
+1381 | 245abad | 240829-1212 | none | N |  | 
+1381 | 245abad | 240829-1238 | none | N |  | 
+1381 | 245abad | 240829-1304 | none | N |  | 
+1381 | 245abad | 240829-1328 | none | N |  | 

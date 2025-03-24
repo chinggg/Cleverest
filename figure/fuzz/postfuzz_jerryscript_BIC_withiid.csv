@@ -1,0 +1,21 @@
+issue | commit | idx | status | final | first crash | time to find first crash
+5013 | b7e3bae | 250212-1127 | bug_Aborted^Aborted | X | fuzzout_#5013_b7e3bae_after/default/crashes/id:000000,sig:06,src:005381,time:21743779,execs:4115034,op:havoc,rep:2 | 
+5013 | b7e3bae | 250212-1131 | bug_Aborted^Aborted | X | fuzzout_#5013_b7e3bae_after/default/crashes/id:000000,sig:06,src:000000,time:68398,execs:17541,op:havoc,rep:1 | 
+5013 | b7e3bae | 250212-1136 | bug_Aborted^Aborted | X | fuzzout_#5013_b7e3bae_after/default/crashes/id:000000,sig:06,src:002876,time:7014460,execs:1450060,op:havoc,rep:1 | 
+5013 | b7e3bae | 250212-1140 | bug_Aborted^Aborted | X | fuzzout_#5013_b7e3bae_after/default/crashes/id:000000,sig:06,src:000002,time:48383,execs:10768,op:havoc,rep:1 | 
+5013 | b7e3bae | 250212-1144 | bug_Aborted^Aborted | X | fuzzout_#5013_b7e3bae_after/default/crashes/id:000000,sig:11,src:001796,time:1990557,execs:375864,op:havoc,rep:1 | 
+5138 | 70e275e | 250212-1127 | bug_^Aborted | B | fuzzout_#5138_70e275e_after/default/crashes/id:000000,sig:06,src:000000,time:6730,execs:1289,op:flip1,pos:113 | 6730
+5138 | 70e275e | 250212-1131 | bug_^Aborted | B | fuzzout_#5138_70e275e_after/default/crashes/id:000000,sig:06,src:000212+000000,time:287393,execs:63114,op:splice,rep:8 | 287393
+5138 | 70e275e | 250212-1136 | bug_^Aborted | B | fuzzout_#5138_70e275e_after/default/crashes/id:000000,sig:06,src:000002,time:33579,execs:9195,op:havoc,rep:4 | 33579
+5138 | 70e275e | 250212-1140 | bug_^Aborted | B | fuzzout_#5138_70e275e_after/default/crashes/id:000000,sig:06,src:000000,time:40546,execs:9067,op:havoc,rep:2 | 40546
+5138 | 70e275e | 250212-1144 | bug_^Aborted | B | fuzzout_#5138_70e275e_after/default/crashes/id:000000,sig:06,src:000000,time:84025,execs:18777,op:havoc,rep:1 | 84025
+5117 | 53b61c1 | 250212-1127 | bug_^Aborted | B | fuzzout_#5117_53b61c1_after/default/crashes/id:000000,sig:06,src:000002,time:108187,execs:20367,op:havoc,rep:4 | 108187
+5117 | 53b61c1 | 250212-1131 | bug_^Aborted | B | fuzzout_#5117_53b61c1_after/default/crashes/id:000000,sig:06,src:000000,time:92237,execs:23347,op:havoc,rep:4 | 92237
+5117 | 53b61c1 | 250212-1136 | bug_^Aborted | B | fuzzout_#5117_53b61c1_after/default/crashes/id:000000,sig:06,src:000000,time:41316,execs:11380,op:havoc,rep:2 | 41316
+5117 | 53b61c1 | 250212-1140 | bug_^Aborted | B | fuzzout_#5117_53b61c1_after/default/crashes/id:000000,sig:06,src:000001,time:30405,execs:6734,op:havoc,rep:1 | 30405
+5117 | 53b61c1 | 250212-1144 | bug_^Aborted | B | fuzzout_#5117_53b61c1_after/default/crashes/id:000000,sig:06,src:000001,time:22839,execs:5543,op:havoc,rep:3 | 22839
+5153 | 70e275e | 250212-1127 | bug_^Aborted | B | fuzzout_#5153_70e275e_after/default/crashes/id:000000,sig:06,src:000001,time:2492,execs:406,op:quick,pos:78 | 2492
+5153 | 70e275e | 250212-1131 | bug_^Aborted | B | fuzzout_#5153_70e275e_after/default/crashes/id:000000,sig:06,src:000000,time:1710,execs:482,op:quick,pos:106 | 1710
+5153 | 70e275e | 250212-1136 | bug_^Aborted | B | fuzzout_#5153_70e275e_after/default/crashes/id:000000,sig:06,src:000002,time:55923,execs:14899,op:havoc,rep:1 | 55923
+5153 | 70e275e | 250212-1140 | bug_^Aborted | B | fuzzout_#5153_70e275e_after/default/crashes/id:000000,sig:06,src:000001,time:1709,execs:438,op:quick,pos:89 | 1709
+5153 | 70e275e | 250212-1144 | bug_^Aborted | B | fuzzout_#5153_70e275e_after/default/crashes/id:000000,sig:06,src:000003,time:1963,execs:481,op:quick,pos:95 | 1963

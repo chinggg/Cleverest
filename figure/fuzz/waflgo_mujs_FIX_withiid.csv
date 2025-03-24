@@ -1,0 +1,21 @@
+issue | commit | idx | final | time to find first crash in ms | first_crash
+65 | 833f82c | 1 | X | orig:CVE-2016-10132 | out_mujs_833f82c_1/queue/id:000000,orig:CVE-2016-10132
+65 | 833f82c | 2 | X | orig:CVE-2016-10132 | out_mujs_833f82c_2/queue/id:000000,orig:CVE-2016-10132
+65 | 833f82c | 3 | X | 36076139 | out_mujs_833f82c_3/crashes.2024-09-03-14:26:46/target_id:000000,36076139,sig:11,src:003157,op:havoc,rep:8
+65 | 833f82c | 4 | R | orig:CVE-2016-10132 | out_mujs_833f82c_4/queue/id:000000,orig:CVE-2016-10132
+65 | 833f82c | 5 | X | orig:CVE-2016-10132 | out_mujs_833f82c_5/queue/id:000000,orig:CVE-2016-10132
+141 | 6871e5b | 1 | B | 622058 | out_mujs_6871e5b_1/queue/id:000574,622058,src:000213,op:havoc,rep:64,+cov
+141 | 6871e5b | 2 | B | 737438 | out_mujs_6871e5b_2/queue/id:000527,737438,src:000223,op:havoc,rep:32,+cov
+141 | 6871e5b | 3 | B | 663413 | out_mujs_6871e5b_3/queue/id:000587,663413,src:000227,op:havoc,rep:32,+cov
+141 | 6871e5b | 4 | B | 979254 | out_mujs_6871e5b_4/queue/id:000693,979254,src:000477,op:havoc,rep:128,+cov
+141 | 6871e5b | 5 | B | 833402 | out_mujs_6871e5b_5/queue/id:000616,833402,src:000386,op:havoc,rep:64,+cov
+145 | f93d245 | 1 | B | 451098 | out_mujs_f93d245_1/queue/id:000987,451098,src:000016,op:flip1,pos:11,+cov
+145 | f93d245 | 2 | B | 235072 | out_mujs_f93d245_2/queue/id:000601,235072,src:000545,op:havoc,rep:4
+145 | f93d245 | 3 | B | 270459 | out_mujs_f93d245_3/queue/id:000627,270459,src:000573,op:havoc,rep:4
+145 | f93d245 | 4 | B | 412342 | out_mujs_f93d245_4/queue/id:000879,412342,src:000755,op:havoc,rep:16,+cov
+145 | f93d245 | 5 | B | 412174 | out_mujs_f93d245_5/queue/id:000831,412174,src:000016,op:flip1,pos:11,+cov
+166 | 8b5ba20 | 1 | B | orig:jsc_5.js | out_mujs_8b5ba20_1/queue/id:000013,orig:jsc_5.js
+166 | 8b5ba20 | 2 | B | orig:jsc_5.js | out_mujs_8b5ba20_2/queue/id:000013,orig:jsc_5.js
+166 | 8b5ba20 | 3 | B | orig:jsc_5.js | out_mujs_8b5ba20_3/queue/id:000013,orig:jsc_5.js
+166 | 8b5ba20 | 4 | B | orig:jsc_5.js | out_mujs_8b5ba20_4/queue/id:000013,orig:jsc_5.js
+166 | 8b5ba20 | 5 | B | orig:jsc_5.js | out_mujs_8b5ba20_5/queue/id:000013,orig:jsc_5.js

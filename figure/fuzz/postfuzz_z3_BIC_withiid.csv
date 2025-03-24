@@ -1,0 +1,21 @@
+issue | commit | idx | status | final | first crash | time to find first crash
+6659 | 0f3c562 | 250212-2003 | bug_heap-use-after-free^heap-use-after-free | X | fuzzout_#6659_0f3c562_after/default/crashes/id:000000,sig:06,src:002017,time:9584745,execs:134866,op:havoc,rep:11 | 
+6659 | 0f3c562 | 250217-1948 | none | N |  | 
+6659 | 0f3c562 | 250217-2001 | none | N |  | 
+6659 | 0f3c562 | 250217-2009 | none | N |  | 
+6659 | 0f3c562 | 250217-2021 | none | N |  | 
+6914 | a62e4b2 | 250212-2003 | none | N |  | 
+6914 | a62e4b2 | 250217-1948 | none | N |  | 
+6914 | a62e4b2 | 250217-2001 | none | N |  | 
+6914 | a62e4b2 | 250217-2009 | none | N |  | 
+6914 | a62e4b2 | 250217-2021 | none | N |  | 
+7246 | dec87fe | 250212-2003 | none | N |  | 
+7246 | dec87fe | 250217-1948 | none | N |  | 
+7246 | dec87fe | 250217-2001 | none | N |  | 
+7246 | dec87fe | 250217-2009 | none | N |  | 
+7246 | dec87fe | 250217-2021 | none | N |  | 
+7252 | a7b1db6 | 250212-2003 | none | N |  | 
+7252 | a7b1db6 | 250217-1948 | none | N |  | 
+7252 | a7b1db6 | 250217-2001 | none | N |  | 
+7252 | a7b1db6 | 250217-2009 | none | N |  | 
+7252 | a7b1db6 | 250217-2021 | none | N |  | 

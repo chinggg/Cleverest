@@ -1,0 +1,21 @@
+issue | commit | idx | status | final | first crash | time to find first crash
+5013 | 3686410 | 250212-2332 | none | X | fuzzout_#5013_3686410_before/default/crashes/id:000001,sig:06,src:004349,time:13326964,execs:2800833,op:havoc,rep:2 | 
+5013 | 3686410 | 250217-2138 | bug_stack-overflow^ | B | fuzzout_#5013_3686410_before/default/crashes/id:000062,sig:11,src:009494,time:71349472,execs:15791650,op:havoc,rep:2 | 71349472
+5013 | 3686410 | 250217-2141 | none | X | fuzzout_#5013_3686410_before/default/crashes/id:000000,sig:06,src:001641,time:1599371,execs:349715,op:havoc,rep:2 | 
+5013 | 3686410 | 250217-2145 | bug_stack-overflow^ | B | fuzzout_#5013_3686410_before/default/crashes/id:000000,sig:11,src:000003,time:79464,execs:15215,op:havoc,rep:1 | 79464
+5013 | 3686410 | 250217-2147 | bug_stack-overflow^ | B | fuzzout_#5013_3686410_before/default/crashes/id:000026,sig:11,src:003749,time:19793983,execs:3990501,op:havoc,rep:1 | 19793983
+5138 | 95cc5e9 | 250212-2332 | bug_Aborted^ | B | fuzzout_#5138_95cc5e9_before/default/crashes/id:000131,sig:06,src:008423,time:60060039,execs:11683897,op:havoc,rep:1 | 60060039
+5138 | 95cc5e9 | 250217-2138 | bug_Aborted^ | B | fuzzout_#5138_95cc5e9_before/default/crashes/id:000024,sig:06,src:002931+001187,time:8522609,execs:1856343,op:splice,rep:13 | 8522609
+5138 | 95cc5e9 | 250217-2141 | bug_Aborted^ | B | fuzzout_#5138_95cc5e9_before/default/crashes/id:000016,sig:06,src:002761,time:3940757,execs:870022,op:havoc,rep:1 | 3940757
+5138 | 95cc5e9 | 250217-2145 | bug_Aborted^ | B | fuzzout_#5138_95cc5e9_before/default/crashes/id:000169,sig:06,src:003943+000869,time:75286060,execs:14629774,op:splice,rep:3 | 75286060
+5138 | 95cc5e9 | 250217-2147 | bug_Aborted^Aborted | X | fuzzout_#5138_95cc5e9_before/default/crashes/id:000000,sig:06,src:000002,time:1063776,execs:212237,op:havoc,rep:2 | 
+5117 | d7e2125 | 250212-2332 | bug_Aborted^Aborted | X | fuzzout_#5117_d7e2125_before/default/crashes/id:000000,sig:06,src:000000,time:28216,execs:5363,op:havoc,rep:6 | 
+5117 | d7e2125 | 250217-2138 | bug_Aborted^ | B | fuzzout_#5117_d7e2125_before/default/crashes/id:000157,sig:06,src:005251+000004,time:40544214,execs:8740764,op:splice,rep:1 | 40544214
+5117 | d7e2125 | 250217-2141 | bug_Aborted^Aborted | X | fuzzout_#5117_d7e2125_before/default/crashes/id:000000,sig:06,src:000000,time:23032,execs:5446,op:havoc,rep:3 | 
+5117 | d7e2125 | 250217-2145 | none | N |  | 
+5117 | d7e2125 | 250217-2147 | none | N |  | 
+5153 | de51531 | 250212-2332 | bug_Aborted^ | B | fuzzout_#5153_de51531_before/default/crashes/id:000006,sig:06,src:004668,time:10088762,execs:2124616,op:havoc,rep:3 | 10088762
+5153 | de51531 | 250217-2138 | bug_Aborted^ | B | fuzzout_#5153_de51531_before/default/crashes/id:000202,sig:06,src:002541+003948,time:35191687,execs:7573453,op:splice,rep:2 | 35191687
+5153 | de51531 | 250217-2141 | bug_Aborted^ | B | fuzzout_#5153_de51531_before/default/crashes/id:000102,sig:06,src:006547,time:24990201,execs:5225284,op:havoc,rep:1 | 24990201
+5153 | de51531 | 250217-2145 | bug_Aborted^Aborted | X | fuzzout_#5153_de51531_before/default/crashes/id:000000,sig:06,src:002101,time:2390282,execs:477158,op:havoc,rep:6 | 
+5153 | de51531 | 250217-2147 | bug_Aborted^ | B | fuzzout_#5153_de51531_before/default/crashes/id:000044,sig:06,src:004962,time:13317558,execs:2679183,op:havoc,rep:1 | 13317558
