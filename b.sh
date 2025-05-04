@@ -6,6 +6,7 @@ SCENARIO=${SCENARIO:-BIC}
 source $1
 source utils.sh
 
+[ -d $PROJ_NAME ] || clone_repo
 pushd $PROJ_NAME
 for i in "${!COMMITS[@]}"; do
     commit=${COMMITS[$i]}   
