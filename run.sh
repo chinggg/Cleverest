@@ -12,6 +12,7 @@ LLM_TEMP=${LLM_TEMP:-0.5}
 NOFEEDBACK=${NOFEEDBACK:-""}
 GENCMD=${GENCMD:-""}
 RUNFUZZ=${RUNFUZZ:-""}
+GENSCRIPT=${GENSCRIPT:-""}  # New parameter to generate input generator script
 
 # https://github.com/janlay/openai-cli should be put in CWD
 openai=openai
@@ -40,6 +41,7 @@ print_configurations() {
     echo "NOFEEDBACK: $NOFEEDBACK"
     echo "GENCMD: $GENCMD"
     echo "RUNFUZZ: $RUNFUZZ"
+    echo "GENSCRIPT: $GENSCRIPT"
 }
 
 suffix=$(date +"%y%m%d-%H%M")
@@ -73,11 +75,14 @@ collect_exp () {
 
 export ASAN_OPTIONS=detect_leaks=0
 PROMPT_SYS_PROJ="You are a software expert testing $PROJ_NAME, $PROJ_DESC"
-PROMPT_SYS_FORMAT="You must respond only ONE final answer with following format:
-\`\`\`
-input you construct, not too long, can be valid/broken format
-\`\`\`
-A very brief explanation of how your input can trigger bug for this commit."
+PROMPT_SYS_FORMAT="You must respond only ONE final answer with following format:"
+
+# Add conditional prompt format based on GENSCRIPT parameter
+if [ "$GENSCRIPT" ]; then
+    PROMPT_SYS_FORMAT+="\n\`\`\`python\n# Python script that generates a test input file\n# Script should write output to 'generated_input.bin'\n\`\`\`\nA very brief explanation of how your generated input can trigger bug for this commit."
+else
+    PROMPT_SYS_FORMAT+="\n\`\`\`\ninput you construct, not too long, can be valid/broken format\n\`\`\`\nA very brief explanation of how your input can trigger bug for this commit."
+fi
 
 # if LLM model is reasoning like deepseek-r1, append system prompt ask it to avoid overthinking and print final result with format above
 if [[ "$LLM" == deepseek-r1 ]]; then
@@ -113,6 +118,17 @@ construct_prompt () {
 A very brief explanation of how your command line options can enabling trigger of bug."
     else 
         prompt_sys_goal+="\nCommand used to execute input: $command (@@ refers to input file)"
+    fi
+
+    # Modify prompt based on GENSCRIPT parameter
+    if [ "$GENSCRIPT" ]; then
+        prompt_sys_goal+="\nPlease write a Python script generating a input file which I will execute to trigger the bug."
+        prompt_sys_goal+="\nThe script should handle binary formatting correctly and always write the output to 'generated_input.bin' without error."
+        
+        # Add format-specific information if available in config
+        if [ "$FORMAT_INFO" ]; then
+            prompt_sys_goal+="\nThe program expects input in ${FORMAT_INFO} format."
+        fi
     fi
 
     echo "$PROMPT_SYS_PROJ\n$prompt_sys_goal\n$prompt_sys_format\n\nHere is $commit:\n$(git_commit_info $commit)\n"
@@ -380,6 +396,7 @@ for i in "${!COMMITS[@]}"; do
         echo -e ">>>>>>>>👨🏻‍💻User msg #$cnt:\n$msg\n\n<<<<<<<<\n" >> $chat_log
 
         input_file="INPUT_${id}_$((cnt+1))_${LLM}"
+        
         # query LLM with $msg and parse input from answer, retry needed for deepseek-r1 API
         max_retries=3
         retry_count=0
@@ -389,7 +406,7 @@ for i in "${!COMMITS[@]}"; do
                 ans=$(echo "$msg" | timeout 1200s ../$openai +model=deepseek-ai/$LLM +temperature=$LLM_TEMP)
                 # ans=$(echo "$msg" | timeout 1200s ../$openai +model=deepseek/deepseek-r1:free +temperature=$LLM_TEMP)
             else
-                ans=$(echo "$msg" | timeout 30s ../$openai +model=$LLM +temperature=$LLM_TEMP)
+                ans=$(echo "$msg" | timeout 60s ../$openai +model=$LLM +temperature=$LLM_TEMP)
             fi
             duration_llm=$(($SECONDS-$st_llm))
             echo "LLM response time for $id #$cnt (retry #$retry_count): $duration_llm seconds" | tee -a $chat_log
@@ -413,7 +430,35 @@ for i in "${!COMMITS[@]}"; do
         echo "Input parsed: $input"
         echo -e "$ans" > ANS_${id}_${cnt}_${LLM}.txt
         echo -e ">>>>>>>>🤖$LLM ans #$cnt:\n$ans\n<<<<<<<<\n\n" >> $chat_log
-        echo -e "$input" > $input_file
+
+        if [ "$GENSCRIPT" ]; then
+            # Parse Python script from LLM response
+            # script=$(echo "$ans" | sed -n '/^```python/,/^```/ p' | sed '1d;$d')
+            
+            # Save script to file
+            script_file="SCRIPT_${id}_$((cnt+1))_${LLM}.py"
+            echo -e "$input" > $script_file
+            chmod +x $script_file
+            
+            # Execute script to generate input
+            script_output=$(script -aeq -c "python3 $script_file")
+            
+            # If script generated the expected output file, move it to input_file
+            if [ -f "generated_input.bin" ]; then
+                mv generated_input.bin $input_file
+            else
+                echo "Script $script_file did not generate the expected output file 'generated_input.bin'" | tee -a $chat_log
+                echo -e "Script $script_file output:\n$script_output" | tee -a $chat_log
+                # just write the script output to input_file
+                error_comments="'''This script failed to generate file 'generated_input.bin' and showed this:\n$script_output\n'''\n"
+                input="$error_comments\n$input"
+                echo -e "$input" >> $input_file
+            fi
+        else
+            # Original direct input parsing
+            echo -e "$input" > $input_file
+        fi
+
         if [ "$GENCMD" ]; then
             command=$(parse_llm_cmd "$ans")
             [ -z "$command" ] && echo "Parsed empty command from LLM response, skipping." | tee -a $chat_log && continue

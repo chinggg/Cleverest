@@ -99,3 +99,13 @@ MAX_ITER=10 ./run.sh $conf
 ### RQ3: Comparison to the State-of-the-Art
 
 Follow instructions in [`fuzz/README.md`](fuzz/README.md) to run WAFLGo and ClevFuzz experiments.
+
+### Handling Binary Input Formats
+
+For programs that require binary input formats (like image processors, PDF readers, etc.), Cleverest can generate Python scripts that create properly formatted binary inputs:
+
+```bash
+GENSCRIPT=1 ./run.sh $conf
+```
+
+This will instruct the LLM to write a Python script that generates binary inputs according to the required format rather than generating the inputs directly. The generated script will be saved with the prefix `SCRIPT_` and automatically executed to produce the test input.

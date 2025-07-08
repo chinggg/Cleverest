@@ -307,3 +307,9 @@ repeat() {
         $@
     done
 }
+
+parse_llm_script() {
+    local ans=$1
+    local script=$(echo "$ans" | sed -n '/^```python/,/^```/ p' | sed '1d;$d')
+    echo "$script"
+}
