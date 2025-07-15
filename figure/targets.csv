@@ -22,3 +22,11 @@ php-src,the PHP interpreter,php @@,16777,5cb38e9,18b18f0,https://github.com/php/
 php-src,the PHP interpreter,php @@,16978,8c704ab,d17ed34,https://github.com/php/php-src/issues/16978
 php-src,the PHP interpreter,php @@,17442,998bce1,b068c2f,https://github.com/php/php-src/issues/17442
 php-src,the PHP interpreter,php @@,17463,7904a08,e4473ab,https://github.com/php/php-src/issues/17463
+libtiff,TIFF Library and Utilities,tiffcrop -Z 1:3,2:4 -e divided @@ out.tif,488,7057734,97d6585,https://gitlab.com/libtiff/libtiff/-/issues/488
+libtiff,TIFF Library and Utilities,tiffcrop -E right -z 1,1,2048,2048:1,2049,2048,4097 -i @@ /tmp/foo,498,07d79fc,82a7fbb,https://gitlab.com/libtiff/libtiff/-/issues/498
+libtiff,TIFF Library and Utilities,tiffcrop -E l -Z 12:50,12:99 -e divided -R 90 @@ /dev/null,519,f13cf46,69818e2,https://gitlab.com/libtiff/libtiff/-/issues/519
+libtiff,TIFF Library and Utilities,tiffcrop -Z 12:50,12:99 -R 270 @@ /dev/null,520,e319508,6366e8f,https://gitlab.com/libtiff/libtiff/-/issues/520
+libtiff,TIFF Library and Utilities,tiffcrop -z 12,50,12,99:112,150,112,199 -e divided @@ test,527,07d79fc,ec8ef90,https://gitlab.com/libtiff/libtiff/-/issues/527
+libtiff,TIFF Library and Utilities,tiffcrop -B @@ temp,530,f13cf46,b0e1c25,https://gitlab.com/libtiff/libtiff/-/issues/530
+libtiff,TIFF Library and Utilities,tiffcp -i @@ /dev/null,548,3079627,9be22b6,https://gitlab.com/libtiff/libtiff/-/issues/548
+libtiff,TIFF Library and Utilities,tiffinfo @@,559,b90b20d,e8874d7,https://gitlab.com/libtiff/libtiff/-/issues/559
