@@ -86,7 +86,7 @@ fi
 
 PROMPT_SYS_GOAL_BIC="I will show a commit that introduces potential new bug, please review carefully and construct a input to trigger bug, or cause behavior difference, or at least reach lines affected by this commit.
 Since the bug is introduced by commit, it should be triggered for program after the commit, not before the commit."
-PROPMT_SYS_GOAL_FIX="I will show a commit that fixs known bug, please review carefully and construct a input to reproduce bug, or cause behavior difference, or at least reach lines affected by this commit.
+PROMPT_SYS_GOAL_FIX="I will show a commit that fixs known bug, please review carefully and construct a input to reproduce bug, or cause behavior difference, or at least reach lines affected by this commit.
 Since the bug is fixed by the commit, it should be triggered for program before the commit, not after the commit."
 
 construct_prompt () {
