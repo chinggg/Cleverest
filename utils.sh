@@ -10,7 +10,7 @@ get_cmd () {
 
 check_output_invalid() {
     # if $1 contains $BASH_SOURCE, "No such", means execution is unusual and not valid
-    if [[ "$1" == *"$BASH_SOURCE"* || "$1" == *"No such"* || "$1" == *"Usage"* || "$1" == *"Is a directory"* ]]; then
+    if [[ "$1" == *"$BASH_SOURCE"* || "$1" == *"No such"* || "$1" == *"Usage"* || "$1" == *"Is a directory"* || "$1" == *"failed to run command"* ]]; then
         return $(true)
     fi
     return $(false)
@@ -144,14 +144,33 @@ get_commit_msg_from_json() {
     jq -r ".\"$commit\".\"msg_${mode,,}\"" "$json_file"
 }
 
+get_commit_msg_from_yaml() {
+    local commit=$1
+    local mode=${2,,}
+    local yaml_file="../msg/gemini.yaml"
+
+    if [ ! -f "$yaml_file" ]; then
+        echo "Error: YAML file $yaml_file not found."
+        return 1
+    fi
+
+    # Use yq to extract the message, assuming yq is installed
+    msg=$(yq ".[] | select(.commit == \"$commit\") | .msg_$mode" "$yaml_file")
+    # if msg is "null", fall back to git_commit_msgonly
+    if [ "$msg" == "null" ]; then
+        msg=$(git_commit_msgonly "$commit")
+    fi
+    echo "$msg"
+}
+
 git_commit_enhanced() {
     local commit=$1
-    get_commit_msg_from_json "$commit" "ENHANCED"
+    get_commit_msg_from_yaml "$commit" "ENHANCED"
 }
 
 git_commit_reduced() {
     local commit=$1
-    get_commit_msg_from_json "$commit" "REDUCED"
+    get_commit_msg_from_yaml "$commit" "REDUCED"
 }
 
 git_commit_featureonly() {
