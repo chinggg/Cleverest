@@ -1,0 +1,439 @@
+- proj: mujs
+  issue: 65
+  commit: 833f82c
+  scenario: FIX
+  best_result: B
+  best_result_msgonly: N
+  msg: 'Fix issue #65: Uninitialized name in Function.prototype function.'
+  msg_enhanced: 'Fix issue #65: Uninitialized `name` and `length` properties in `Function.prototype`
+    causing a null pointer dereference when `Function.prototype` is converted to a
+    string, specifically observed when `Array.prototype.splice` is called with `Function.prototype`
+    as an argument.'
+  msg_reduced: null
+- proj: mujs
+  issue: 141
+  commit: 6871e5b
+  scenario: FIX
+  best_result: B
+  best_result_msgonly: N
+  msg: 'Issue #141: Add missing end-of-string checks in regexp lexer.'
+  msg_enhanced: 'Issue #141: Add missing end-of-string checks in regexp lexer, which
+    caused a heap-buffer-overflow when parsing incomplete escape sequences like `\c`,
+    `\x`, or `\u` at the end of a regular expression string.'
+  msg_reduced: null
+- proj: mujs
+  issue: 145
+  commit: f93d245
+  scenario: FIX
+  best_result: B
+  best_result_msgonly: B
+  msg: Fix js_strtol
+  msg_enhanced: null
+  msg_reduced: Fix js_strtol
+- proj: mujs
+  issue: 166
+  commit: 8b5ba20
+  scenario: FIX
+  best_result: B
+  best_result_msgonly: B
+  msg: 'Issue #166: Use special iterator for string and array indices.
+
+
+    Add a scratch buffer to js_State to hold temporary strings.'
+  msg_enhanced: null
+  msg_reduced: 'Issue #166: Use special iterator for string and array indices.
+
+
+    Add a scratch buffer to js_State to hold temporary strings.'
+- proj: libxml2
+  issue: 535
+  commit: d0c3f01
+  scenario: FIX
+  best_result: B
+  best_result_msgonly: B
+  msg: 'parser: Fix old SAX1 parser with custom callbacks
+
+
+    For some reason, xmlCtxtUseOptionsInternal set the start and end element
+
+    SAX handlers to the internal DOM builder functions when XML_PARSE_SAX1
+
+    was specified. This means that custom SAX handlers could never work with
+
+    that flag because these functions would receive the wrong user data
+
+    argument and crash immediately.
+
+
+    Fixes #535.'
+  msg_enhanced: null
+  msg_reduced: 'parser: Fix old SAX1 parser with custom callbacks
+
+
+    For some reason, xmlCtxtUseOptionsInternal set the start and end element
+
+    SAX handlers to the internal DOM builder functions when XML_PARSE_SAX1
+
+    was specified. This means that custom SAX handlers could never work with
+
+    that flag because these functions would receive the wrong user data
+
+    argument and crash immediately.
+
+
+    Fixes #535.'
+- proj: libxml2
+  issue: 550
+  commit: 6273df6
+  scenario: FIX
+  best_result: X
+  best_result_msgonly: N
+  msg: 'xpath: Ignore entity ref nodes when computing node hash
+
+
+    XPath queries only work reliably if entities are substituted.
+
+    Nevertheless, it''s possible to query a document with entity reference
+
+    nodes. xmllint even deletes entities when the `--dropdtd` option is
+
+    passed, resulting in dangling pointers, so it''s best to skip entity
+
+    reference nodes to avoid a use-after-free.
+
+
+    Fixes #550.'
+  msg_enhanced: 'xpath: Ignore entity ref nodes when computing node hash to prevent
+    a use-after-free when `xmllint` is used with `--dropdtd` and an XPath query is
+    executed on a document containing entity references that have been freed.
+
+
+    Fixes #550.'
+  msg_reduced: null
+- proj: poppler
+  issue: 1282
+  commit: 4564a00
+  scenario: FIX
+  best_result: R
+  best_result_msgonly: R
+  msg: 'pdfunite: Fix crash on broken files'
+  msg_enhanced: 'pdfunite: Fix crash on broken files when `PDFDoc::replacePageDict`
+    attempts to access a page dictionary from a non-dictionary object.'
+  msg_reduced: 'pdfunite: Fix crash on broken files'
+- proj: poppler
+  issue: 1289
+  commit: efb6868
+  scenario: FIX
+  best_result: B
+  best_result_msgonly: N
+  msg: 'pdfunite: Don''t crash in broken documents'
+  msg_enhanced: 'pdfunite: Don''t crash when merging documents containing AcroForm
+    dictionaries where the "Fields" array contains a non-reference object.'
+  msg_reduced: null
+- proj: poppler
+  issue: 1303
+  commit: a4ca3a9
+  scenario: FIX
+  best_result: B
+  best_result_msgonly: N
+  msg: 'topIdx can''t be negative
+
+
+    Fixes crash on broken files. Issue #1303'
+  msg_enhanced: 'topIdx can''t be negative
+
+
+    Fixes crash on broken files where the "TI" (Top Index) entry in a FormFieldChoice
+    dictionary is a negative integer, leading to a segmentation fault when accessing
+    array elements with the invalid index.'
+  msg_reduced: null
+- proj: poppler
+  issue: 1305
+  commit: 907d05a
+  scenario: FIX
+  best_result: N
+  best_result_msgonly: N
+  msg: 'Fix crash in file that wants to do huge transparency group
+
+
+    huge = 2147483016 x 2
+
+
+    Issue #1305'
+  msg_enhanced: 'Fix crash when creating a `SplashBitmap` with a very large height
+    and `alphaA` set to true, causing `gmallocn` to abort due to an integer overflow
+    during memory allocation for the alpha channel.
+
+
+    Issue #1305'
+  msg_reduced: null
+- proj: poppler
+  issue: 1381
+  commit: 1be35ee
+  scenario: FIX
+  best_result: N
+  best_result_msgonly: N
+  msg: 'Fix stack overflow in PostScriptFunction::parseCode
+
+
+    By using a pointer instead of a variable things are on the heap.
+
+
+    Fixes issue #1381'
+  msg_enhanced: 'Fix stack overflow in `PostScriptFunction::parseCode` when parsing
+    a deeply nested PostScript function, caused by excessive stack usage from `GooString`
+    objects created in a loop.
+
+
+    By using a pointer instead of a variable things are on the heap.
+
+
+    Fixes issue #1381'
+  msg_reduced: null
+- proj: jerryscript
+  issue: 5013
+  commit: '3686410'
+  scenario: FIX
+  best_result: R
+  best_result_msgonly: R
+  msg: 'Mark generator as running during yield* (#5014)
+
+
+    Fixes #5013
+
+
+    JerryScript-DCO-1.0-Signed-off-by: Zoltan Herczeg zherczeg.u-szeged@partner.samsung.com'
+  msg_enhanced: 'Mark generator as running during yield* when a `yield*` expression
+    is used within a generator that attempts to yield to itself recursively, leading
+    to a stack overflow or an assertion failure indicating that the generator is already
+    running.
+
+
+    Fixes #5013
+
+
+    JerryScript-DCO-1.0-Signed-off-by: Zoltan Herczeg zherczeg.u-szeged@partner.samsung.com'
+  msg_reduced: 'Mark generator as running during yield* (#5014)
+
+
+    Fixes #5013
+
+
+    JerryScript-DCO-1.0-Signed-off-by: Zoltan Herczeg zherczeg.u-szeged@partner.samsung.com'
+- proj: jerryscript
+  issue: 5138
+  commit: 95cc5e9
+  scenario: FIX
+  best_result: B
+  best_result_msgonly: B
+  msg: 'Fix the private field crash for the Array object. (#5139)
+
+
+    Fixes 5097, 5100, 5138
+
+
+    Additional regression test cases added by: Robert Sipka <robert.sipka@h-lab.eu>
+
+
+    JerryScript-DCO-1.0-Signed-off-by: Baihe Jiang <baihe.jiang@outlook.com>
+
+    JerryScript-DCO-1.0-Signed-off-by: Lily Jiang bhjiang.whu@hotmail.com'
+  msg_enhanced: null
+  msg_reduced: 'Fix the private field crash for the Array object. (#5139)
+
+
+    Fixes 5097, 5100, 5138
+
+
+    Additional regression test cases added by: Robert Sipka <robert.sipka@h-lab.eu>
+
+
+    JerryScript-DCO-1.0-Signed-off-by: Baihe Jiang <baihe.jiang@outlook.com>
+
+    JerryScript-DCO-1.0-Signed-off-by: Lily Jiang bhjiang.whu@hotmail.com'
+- proj: jerryscript
+  issue: 5117
+  commit: d7e2125
+  scenario: FIX
+  best_result: B
+  best_result_msgonly: B
+  msg: 'Fix arguments object in eval-ed functions in static class initializers (#5140)
+
+
+    JerryScript-DCO-1.0-Signed-off-by: Máté Tokodi mate.tokodi@szteszoftver.hu'
+  msg_enhanced: null
+  msg_reduced: 'Fix arguments object in eval-ed functions in static class initializers
+    (#5140)
+
+
+    JerryScript-DCO-1.0-Signed-off-by: Máté Tokodi mate.tokodi@szteszoftver.hu'
+- proj: jerryscript
+  issue: 5153
+  commit: de51531
+  scenario: FIX
+  best_result: N
+  best_result_msgonly: N
+  msg: 'Fix parsing of invalid asterix symbol after private field symbol (#5155)
+
+
+    Raise syntax error instead of crashing.
+
+
+    JerryScript-DCO-1.0-Signed-off-by: Ádám Kulcsár kuladam@inf.u-szeged.hu'
+  msg_enhanced: 'Fix parsing of invalid asterisk symbol after private field symbol,
+    which previously caused a segmentation fault when an asterisk was used after an
+    async private method declaration.
+
+
+    Raise syntax error instead of crashing.
+
+
+    JerryScript-DCO-1.0-Signed-off-by: Ádám Kulcsár kuladam@inf.u-szeged.hu'
+  msg_reduced: null
+- proj: z3
+  issue: 6659
+  commit: a849a29
+  scenario: FIX
+  best_result: R
+  best_result_msgonly: N
+  msg: 'fix #6659'
+  msg_enhanced: Fix a heap-use-after-free bug in `dominator_simplifier::cache` that
+    occurs when the `dom-simplify` tactic is used with certain formulas, specifically
+    when an expression `t` is cached, but its corresponding result `r` is not also
+    added to `m_trail` for garbage collection, leading to `t` being prematurely deallocated
+    and subsequently accessed.
+  msg_reduced: null
+- proj: z3
+  issue: 6914
+  commit: eea9c0b
+  scenario: FIX
+  best_result: R
+  best_result_msgonly: R
+  msg: 'fix #6914'
+  msg_enhanced: 'fix #6914
+
+
+    This commit fixes a heap-use-after-free bug that occurs when `smt_model_finder::reset_eval_cache()`
+    is not called after expressions are removed from the SMT solver, leading to dangling
+    pointers in the evaluation cache.'
+  msg_reduced: 'fix #6914'
+- proj: z3
+  issue: 7246
+  commit: 49610f5
+  scenario: FIX
+  best_result: R
+  best_result_msgonly: N
+  msg: 'fix #7246
+
+
+    Signed-off-by: Nikolaj Bjorner <nbjorner@microsoft.com>'
+  msg_enhanced: 'fix #7246: Prevent segmentation fault when `user_pop` is called on
+    an empty `m_user_scope_literals` vector, which occurs when a `pop` operation is
+    executed after `push` but before `set-logic`.'
+  msg_reduced: null
+- proj: z3
+  issue: 7252
+  commit: a6b5027
+  scenario: FIX
+  best_result: B
+  best_result_msgonly: N
+  msg: 'fix #7252
+
+
+    Signed-off-by: Nikolaj Bjorner <nbjorner@microsoft.com>'
+  msg_enhanced: 'fix #7252
+
+
+    Properly handle reference counts when constructing regular expression loops and
+    concatenations to prevent segmentation faults when processing nested `re.loop`
+    formulas with specific bounds (e.g., 0 to 1).
+
+
+    Signed-off-by: Nikolaj Bjorner <nbjorner@microsoft.com>'
+  msg_reduced: null
+- proj: php-src
+  issue: 16777
+  commit: 18b18f0
+  scenario: FIX
+  best_result: R
+  best_result_msgonly: R
+  msg: 'Fix GH-16777: Calling the constructor again on a DOM object after it is in
+    a document causes UAF
+
+
+    Closes GH-16824.'
+  msg_enhanced: 'Fix GH-16777: Calling the constructor again on a DOM object after
+    it has been appended to a document and then re-appended to the same or a different
+    document without being properly disassociated from its original document causes
+    a use-after-free vulnerability due to `xmlNodeSetTreeDoc` not being called when
+    the node already has an owner document.
+
+
+    Closes GH-16824.'
+  msg_reduced: 'Fix GH-16777: Calling the constructor again on a DOM object after
+    it is in a document causes UAF
+
+
+    Closes GH-16824.'
+- proj: php-src
+  issue: 16978
+  commit: d17ed34
+  scenario: FIX
+  best_result: R
+  best_result_msgonly: N
+  msg: 'Fixed GH-16978: Avoid unnecessary padding with leading zeros (#16988)
+
+
+    Fixed an issue where leading zeros were padded beyond the allocated memory.
+
+
+    fixes #16978
+
+    closes #16988'
+  msg_enhanced: 'Fixed GH-16978: Avoid unnecessary padding with leading zeros when
+    `bcpow` or `bcdiv` is called with a negative exponent or a large scale, respectively,
+    leading to a stack buffer overflow due to excessive memory allocation for leading
+    zeros.
+
+
+    Fixed an issue where leading zeros were padded beyond the allocated memory.
+
+
+    fixes #16978
+
+    closes #16988'
+  msg_reduced: null
+- proj: php-src
+  issue: 17442
+  commit: b068c2f
+  scenario: FIX
+  best_result: N
+  best_result_msgonly: N
+  msg: 'Fix GH-17442: Engine UAF with reference assign and dtor
+
+
+    Closes GH-17443.'
+  msg_enhanced: 'Fix GH-17442: Engine UAF with reference assign and dtor when a WeakMap
+    containing an object with a destructor that throws an exception is combined with
+    a function like `headers_sent()` attempting to access or modify the object during
+    garbage collection.
+
+
+    Closes GH-17443.'
+  msg_reduced: null
+- proj: php-src
+  issue: 17463
+  commit: e4473ab
+  scenario: FIX
+  best_result: B
+  best_result_msgonly: B
+  msg: 'Fix GH-17463: SplTempFileObject::ftruncate() segfault on negative length.
+
+
+    close GH-465'
+  msg_enhanced: null
+  msg_reduced: 'Fix GH-17463: SplTempFileObject::ftruncate() segfault on negative
+    length.
+
+
+    close GH-465'
