@@ -15,7 +15,7 @@ if [ -z "$env_files" ]; then
     exit 1
 fi
 
-echo "software,description,command,issue,BIC,BFC,url" > targets.csv
+echo "software,description,command,issue,BIC,BFC,url_issue,url_bic,url_bfc" > targets.csv
 for env_file in $env_files; do
     # check if env file exists
     if [ ! -f $env_file ]; then
@@ -25,6 +25,8 @@ for env_file in $env_files; do
     source $env_file
     for i in "${!ISSUES[@]}"; do
         issue_url=$PROJ_REPO/issues/${ISSUES[$i]}
-        echo "$PROJ_NAME,$PROJ_DESC,${COMMANDS[$i]},${ISSUES[$i]},${COMMITS_BIC[$i]},${COMMITS_FIX[$i]},$issue_url" >> targets.csv
+        bic_url=$PROJ_REPO/commit/${COMMITS_BIC[$i]}
+        fix_url=$PROJ_REPO/commit/${COMMITS_FIX[$i]}
+        echo "$PROJ_NAME,$PROJ_DESC,${COMMANDS[$i]},${ISSUES[$i]},${COMMITS_BIC[$i]},${COMMITS_FIX[$i]},$issue_url,$bic_url,$fix_url" >> targets.csv
     done
 done
