@@ -3,8 +3,8 @@
   commit: 833f82c
   scenario: FIX
   best_result: B
-  best_result_msgonly: B
-  score_msgonly: 0.3
+  best_result_msgonly: R
+  score_msgonly: 1.0
   msg: 'Fix issue #65: Uninitialized name in Function.prototype function.'
   msg_enhanced: 'Fix issue #65: Uninitialized `name` and `length` properties in `Function.prototype`
     causing a null pointer dereference when `Function.prototype` is converted to a
@@ -29,7 +29,7 @@
   scenario: FIX
   best_result: B
   best_result_msgonly: B
-  score_msgonly: 2.7
+  score_msgonly: 2.4
   msg: Fix js_strtol
   msg_enhanced: Fix js_strtol when the input string contains characters with an ASCII
     value less than '0', leading to incorrect number conversion and potential global-buffer-overflow.
