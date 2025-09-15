@@ -10,7 +10,7 @@ get_cmd () {
 
 check_output_invalid() {
     # if $1 contains $BASH_SOURCE, "No such", means execution is unusual and not valid
-    if [[ "$1" == *"$BASH_SOURCE"* || "$1" == *"No such"* || "$1" == *"Usage"* || "$1" == *"Is a directory"* ]]; then
+    if [[ "$1" == *"$BASH_SOURCE"* || "$1" == *"No such"* || "$1" == *"Usage"* || "$1" == *"Is a directory"* || "$1" == *"failed to run command"* ]]; then
         return $(true)
     fi
     return $(false)
@@ -116,14 +116,66 @@ git_commit_content() {
     git show --first-parent --format=%B $commit -- '*.c' '*.cpp' '*.cc' '*.h' # handle merge commit
 }
 
+git_commit_full() {  # same as git_commit_content
+    local commit=$1
+    git show --first-parent --format=%B $commit -- '*.c' '*.cpp' '*.cc' '*.h' # handle merge commit
+}
+
 git_commit_msgonly() {
     local commit=$1
     git show -s --format=%B $commit
 }
 
 git_commit_diffonly() {
-    local commit=${1:-"HEAD"}
+    local commit=${1-"HEAD"}
     git diff ${commit}^ ${commit} -- '*.c' '*.cpp' '*.cc' '*.h'
+}
+
+get_commit_msg_from_json() {
+    local commit=$1
+    local mode=$2
+    local json_file="../data/msgs.json"
+
+    if [ ! -f "$json_file" ]; then
+        echo "Error: JSON file $json_file not found."
+        return 1
+    fi
+
+    jq -r ".\"$commit\".\"msg_${mode,,}\"" "$json_file"
+}
+
+get_commit_msg_from_yaml() {
+    local commit=$1
+    local mode=${2,,}
+    local yaml_file="../msg/gemini.yaml"
+
+    if [ ! -f "$yaml_file" ]; then
+        echo "Error: YAML file $yaml_file not found."
+        return 1
+    fi
+
+    # Use yq to extract the message, assuming yq is installed
+    msg=$(yq ".[] | select(.commit == \"$commit\") | .msg_$mode" "$yaml_file")
+    # if msg is "null", fall back to git_commit_msgonly
+    if [ "$msg" == "null" ]; then
+        msg=$(git_commit_msgonly "$commit")
+    fi
+    echo "$msg"
+}
+
+git_commit_enhanced() {
+    local commit=$1
+    get_commit_msg_from_yaml "$commit" "ENHANCED"
+}
+
+git_commit_reduced() {
+    local commit=$1
+    get_commit_msg_from_yaml "$commit" "REDUCED"
+}
+
+git_commit_featureonly() {
+    local commit=$1
+    get_commit_msg_from_json "$commit" "FEATUREONLY"
 }
 
 is_commit_codechange() {

@@ -49,16 +49,32 @@ full_suffix=${conf_suffix}_${suffix}
 
 git_commit_info () {
     local commit=$1
-    # if GIT_INFO is set to MSGONLY, call git_commit_msgonly
-    # if GIT_INFO is set to DIFFONLY, call git_commit_diffonly
-    # otherwise, call git_commit_content
-    if [ "$GIT_INFO" = "MSGONLY" ]; then
-        git_commit_msgonly $commit
-    elif [ "$GIT_INFO" = "DIFFONLY" ]; then
-        git_commit_diffonly $commit
-    else
-        git_commit_content $commit
-    fi
+    local mode=$GIT_INFO
+
+    case $mode in
+        FULL)
+            git_commit_full "$commit"
+            ;;
+        MSGONLY)
+            git_commit_msgonly "$commit"
+            ;;
+        DIFFONLY)
+            git_commit_diffonly "$commit"
+            ;;
+        ENHANCED)
+            git_commit_enhanced "$commit"
+            ;;
+        REDUCED)
+            git_commit_reduced "$commit"
+            ;;
+        FEATUREONLY)
+            git_commit_featureonly "$commit"
+            ;;
+        *)
+            echo "Invalid mode: $mode"
+            exit 1
+            ;;
+    esac
 }
 
 collect_exp () {
@@ -86,7 +102,7 @@ fi
 
 PROMPT_SYS_GOAL_BIC="I will show a commit that introduces potential new bug, please review carefully and construct a input to trigger bug, or cause behavior difference, or at least reach lines affected by this commit.
 Since the bug is introduced by commit, it should be triggered for program after the commit, not before the commit."
-PROPMT_SYS_GOAL_FIX="I will show a commit that fixs known bug, please review carefully and construct a input to reproduce bug, or cause behavior difference, or at least reach lines affected by this commit.
+PROMPT_SYS_GOAL_FIX="I will show a commit that fixs known bug, please review carefully and construct a input to reproduce bug, or cause behavior difference, or at least reach lines affected by this commit.
 Since the bug is fixed by the commit, it should be triggered for program before the commit, not after the commit."
 
 construct_prompt () {
@@ -187,6 +203,8 @@ for i in "${!COMMITS[@]}"; do
             # then, gen gcov with gcda files containing each changed file name
             for file in $changed_files; do
                 filename=$(basename $file)
+                # for mujs, gcov already generated with $PROJ_NAME gcda, skip searching $filename.gcda and just rename
+                [ -f $filename.gcov ] && mv $filename.gcov $filename.gcov.before_${id}.$cnt && continue
                 # find gcda object file in $builddir_before by file name (with or without extension)
                 gcda_before=$(find $builddir_before -name "${filename%.*}.gcda" -o -name "$filename.gcda")
                 if [[ "$gcda_before" ]]; then
@@ -214,6 +232,7 @@ for i in "${!COMMITS[@]}"; do
             done
             for file in $changed_files; do
                 filename=$(basename $file)
+                [ -f $filename.gcov ] && mv $filename.gcov $filename.gcov.after_${id}.$cnt && continue
                 # find gcda object file in $builddir_after by file name (with or without extension)
                 gcda_after=$(find $builddir_after -name "${filename%.*}.gcda" -o -name "$filename.gcda")
                 if [[ "$gcda_after" ]]; then
@@ -351,6 +370,7 @@ for i in "${!COMMITS[@]}"; do
             # if finals[$i] is "B", count as success and also move to next commit
             if [ "${finals[$i]}" = "B" ]; then
                 echo "Successfully trigger intended bug for commit $commit, moving to next commit.\n" | tee -a $chat_log
+                cp $input_file POC_${SCENARIO}_${id}_${cnt}_${LLM}  # name as POC_* to quickly find truly bug-revealing input
                 break
             fi
             # incremental prompting

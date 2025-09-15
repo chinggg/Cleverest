@@ -1,6 +1,7 @@
 import os
 import csv
 import sys
+import argparse
 
 
 SCORE_MAP = {'B': 3, 'D': 2, 'R': 1, 'X': 0, 'N': 0}
@@ -72,33 +73,46 @@ def parse_summary_file(file_path):
                 score = SCORE_MAP[final_result]
                 if final_result == 'X' and commit in MANUAL_MAP:
                   score = MANUAL_MAP[commit]
+                if config['GIT_INFO'] == 'MSGONLY' and commit == '907d05a' and final_result == 'D':  # poppler #1305 FIX MSGONLY one behave cannot be reproduced, set to 0
+                  final_result = 'N'
+                  score = 0
                 success = 1 if final_result == 'B' else 0
                 results.append((commit, final_result, unintended_bug, time, issue, score, success))
         
         return config, results
 
 def main():
-    # output file is argv[1] or 'aggregated_results.csv'
-    if len(sys.argv) > 1:
-        output_csv = sys.argv[1]
-    else:
-        output_csv = 'aggregated_results.csv'
-    # find all SUMMARY_*.txt files in current directory
-    summary_files = [f for f in os.listdir('.') if f.startswith('SUMMARY_') and f.endswith('.txt')]
-    # recursively find all SUMMARY_*.txt files in repdata/
-    # summary_files = []
-    # for root, dirs, files in os.walk('repdata/'):
-    #     for file in files:
-    #         if file.startswith('SUMMARY_') and file.endswith('.txt'):
-    #             summary_files.append(os.path.join(root, file))
+    # Parse command-line arguments
+    parser = argparse.ArgumentParser(description="Aggregate results from SUMMARY files into a CSV.")
+    parser.add_argument('--input', type=str, default='.', help="Directory containing SUMMARY_*.txt files (default: current directory)")
+    parser.add_argument('--output', type=str, default='aggregated_results.csv', help="Output CSV file (default: aggregated_results.csv)")
+    args = parser.parse_args()
+
+    # Set input and output paths
+    input_dir = args.input
+    output_csv = args.output
+
+    # Find all SUMMARY_*.txt files in the specified input directory
+    summary_files = [os.path.join(input_dir, f) for f in os.listdir(input_dir) if f.startswith('SUMMARY_') and f.endswith('.txt')]
+    # recursively find all SUMMARY_*.txt files
+    if True:
+    # if not summary_files:
+      for root, dirs, files in os.walk(input_dir):
+        depth = root[len(input_dir):].count(os.sep)
+        if depth > 1:  # avoid redundant SUMMARY under exp_*
+          continue
+        for file in files:
+          if file.startswith('SUMMARY_') and file.endswith('.txt'):
+            summary_files.append(os.path.join(root, file))
     aggregated_results = []
 
     print("Found {} summary files".format(len(summary_files)))
     for summary_file in summary_files:
         config, results = parse_summary_file(summary_file)
+        summary_filename = os.path.basename(summary_file)
         for result in results:
             aggregated_results.append([
-                os.path.basename(summary_file),
+                summary_filename,
                 config.get('SCENARIO', ''),
                 config.get('GIT_INFO', ''),
                 config.get('MAX_ITER', ''),
@@ -107,7 +121,7 @@ def main():
                 config.get('NOFEEDBACK', ''),
                 config.get('GENCMD', ''),
                 config.get('RUNFUZZ', ''),
-                summary_file.split('_')[1],  # subject
+                summary_filename.split('_')[1],  # subject
                 result[0],  # commit 
                 result[1],  # final_result
                 result[2],  # unintended_bug
