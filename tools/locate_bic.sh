@@ -86,3 +86,9 @@ done
 
 echo -e $summary_table
 echo "COMMITS_BIC=(${COMMITS_BIC[@]})"
+
+pushd $PROJ_NAME
+for commit in "${COMMITS_BIC[@]}"; do
+  commit_oneline $commit
+done
+popd
