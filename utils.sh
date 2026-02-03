@@ -31,7 +31,7 @@ check_output_bug() {
         fi
     done
     # Check for Aborted
-    for pattern in "AddressSanitizer:DEADLYSIGNAL" "Aborted" "Segmentation fault"; do
+    for pattern in "AddressSanitizer:DEADLYSIGNAL" "Aborted" "Segmentation fault" "core dumped" "dumped core"; do
         if bug=$(echo "$input" | grep -o "${pattern}" | head -1); then
             [ ! -z "$bug" ] && echo "$bug" && return 1
         fi
