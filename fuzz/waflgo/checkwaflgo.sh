@@ -36,6 +36,9 @@ for i in "${!COMMITS[@]}"; do
     time_sum=0
     fuzzout_dir_pat="waflgo_${PROJ_NAME}_${commit}_*"
     fuzzout_dirs=$(find $outdir_base -maxdepth 2 -type d -name "$fuzzout_dir_pat" | sort -V)
+    # if not found, use "waflgo_${PROJ_NAME}_${issue}_${commit}_*"
+    [[ -z $fuzzout_dirs ]] && fuzzout_dir_pat="waflgo_${PROJ_NAME}_${issue}_${commit}_*"
+    fuzzout_dirs=$(find $outdir_base -maxdepth 2 -type d -name "$fuzzout_dir_pat" | sort -V)
     # one line to make sure fuzzout_dir exists, otherwise skip
     [[ -z $fuzzout_dirs ]] && { echo "No $fuzzout_dir_pat found in $outdir_base"; continue; }
     for fuzzout_dir in $fuzzout_dirs; do
@@ -79,7 +82,7 @@ for i in "${!COMMITS[@]}"; do
             if [[ "$bug_before" || "$bug_after" ]]; then  # bug triggered
                 status="bug_$bug_before^$bug_after"
                 [ "${finals[$i]}" = "N" ] && finals[$i]="X" && first_file=$input_file
-                if [[ "$bug_before" && "$bug_after" ]]; then
+                if [[ "$bug_before" && "$bug_after" && "$bug_before" == "$bug_after" ]]; then
                     echo "🐛Unintended Bug unrelated to commit $commit with $input_file! Interesting :)" | tee -a $chat_log
                 elif [[ "$bug_before" && "$SCENARIO" = "FIX" ]]; then
                     echo "🐞Intended $status triggered before commit $commit with $input_file!" | tee -a $chat_log

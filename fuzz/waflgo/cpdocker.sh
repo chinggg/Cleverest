@@ -11,12 +11,16 @@ mkdir -p $outroot
 source $conf
 
 # merge COMMITS_BIC and COMMITS_FIX into one array commits
-COMMITS=("${COMMITS_BIC[@]}" "${COMMITS_FIX[@]}")
 for i in "${!COMMITS[@]}"; do
     commit=${COMMITS[$i]}   
+    issue=${ISSUES[$i]}   
     for j in {1..10}; do
         container_name="runwaflgo_${PROJ_NAME}_${commit}_$j"
         foldername="waflgo_${PROJ_NAME}_${commit}_$j"
+        docker cp $container_name:/home/out $outroot/$foldername
+        # run_waflgo should consider different issues with same BIC commit like jq
+        container_name="runwaflgo_${PROJ_NAME}_${issue}_${commit}_$j"
+        foldername="waflgo_${PROJ_NAME}_${issue}_${commit}_$j"
         docker cp $container_name:/home/out $outroot/$foldername
     done
 done
