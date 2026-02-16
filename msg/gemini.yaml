@@ -133,7 +133,7 @@
 
     See #344. Fixes #553.'
   msg_enhanced: null
-  msg_reduced: 'malloc-fail: Handle malloc failures in xmlAddEncodingAlias
+  msg_reduced: 'malloc-fail: Handle malloc failures
 
 
     Avoid memory errors if an allocation fails.
@@ -163,7 +163,7 @@
 
 
     Fixes #720.'
-  msg_reduced: '[CVE-2024-34459] Fix buffer overread with `xmllint --htmlout`
+  msg_reduced: '[CVE-2024-34459] Fix buffer overread with `xmllint`
 
 
     Add a missing bounds check.
@@ -182,7 +182,7 @@
 
     Short-lived regression. Fixes #841.'
   msg_enhanced: null
-  msg_reduced: 'xmllint: Fix UAF with --push --repeat
+  msg_reduced: 'xmllint: Fix UAF
 
 
     Short-lived regression. Fixes #841.'
@@ -603,11 +603,7 @@
 
     The decNumber library subtracts the exponents of two numbers,
 
-    we make sure to limit the number of digits not to make it overflows.
-
-    Since the maximum adjusted exponent is `emax` and the minimum is
-
-    `emin - digits + 1`, we follow `emax - (emin - digits + 1) <= INT32_MAX`.'
+    we make sure to limit the number of digits not to make it overflows.'
 - proj: jq
   issue: 2976
   commit: 71c2ab5
@@ -650,13 +646,6 @@
     We need to allocate an extra byte for the NUL byte.
 
 
-    -10E-1000010001, for example, will be stringified as -1.0E-1000010000
-
-    and decNumberToString will currently write an extra NUL byte after the
-
-    allocated buffer in the heap.
-
-
     Originally reported by @SEU-SSL on GitHub.
 
 
@@ -689,14 +678,11 @@
     arrays and objects. The size of arrays and objects is now limited to
 
     `536870912` (`0x20000000`). This fixes CVE-2024-23337 and fixes #3262.'
-  msg_reduced: 'Fix signed integer overflow in jvp_array_write and jvp_object_rehash
+  msg_reduced: 'Fix signed integer overflow
 
 
-    This commit fixes signed integer overflow and SEGV issues on growing
-
-    arrays and objects. The size of arrays and objects is now limited to
-
-    `536870912` (`0x20000000`). This fixes CVE-2024-23337 and fixes #3262.'
+    This commit fixes signed integer overflow and SEGV issues.
+    This fixes CVE-2024-23337 and fixes #3262.'
 - proj: jq
   issue: 49014
   commit: 499c91b
@@ -745,7 +731,7 @@
 
 
     Signed-off-by: Damien George <damien@micropython.org>'
-  msg_reduced: 'py/objslice: Validate that the argument to indices() is an integer.
+  msg_reduced: 'py/objslice: Validate that the argument is an integer.
 
 
     Otherwise passing in a non-integer can lead to an invalid memory access.
@@ -795,18 +781,7 @@
     \ ints, MPZ long ints) and Zephyr STM32WB\nboard (32 bit small ints, long long\
     \ large ints).\n\nThis work was funded through GitHub Sponsors.\n\nSigned-off-by:\
     \ Angus Gratton <angus@redyak.com.au>"
-  msg_reduced: "py/objint: Fix int.to_bytes() buffer size checks.\n\nFixes and improvements\
-    \ to `int.to_bytes()` are:\n- No longer overflows if byte size is 0 (closes #13041).\n\
-    - Raises OverflowError in any case where number won't fit into byte length\n \
-    \ (now matches CPython, previously MicroPython would return a truncated\n  bytes\
-    \ object).\n- Document that `micropython int.to_bytes()` doesn't implement the\
-    \ optional\n  signed kwarg, but will behave as if `signed=True` when the integer\
-    \ is\n  negative (this is the current behaviour).  Add tests for this also.\n\n\
-    Requires changes for small ints, MPZ large ints, and \"long long\" large\nints.\n\
-    \nAdds a new set of unit tests for ints between 32 and 64 bits to increase\ncoverage\
-    \ of \"long long\" large ints, which are otherwise untested.\n\nTested on unix\
-    \ port (64 bit small ints, MPZ long ints) and Zephyr STM32WB\nboard (32 bit small\
-    \ ints, long long large ints).\n\nThis work was funded through GitHub Sponsors.\n\
+  msg_reduced: "py/objint: Fix int.to_bytes() buffer size checks.\n
     \nSigned-off-by: Angus Gratton <angus@redyak.com.au>"
 - proj: micropython
   issue: 17733
@@ -865,30 +840,6 @@
   msg_reduced: 'py/obj: Add new type flag to indicate subscr accepts slice-on-stack.
 
 
-    The recently merged 5e9189d6d1c00c92694888bf9c74276779c40716 now allows
-
-    temporary slices to be allocated on the C stack, which is much better than
-
-    allocating them on the GC heap.
-
-
-    Unfortunately there are cases where the C-allocated slice can escape and be
-
-    retained as an object, which leads to crashes (because that object points
-
-    to the C stack which now has other values on it).
-
-
-    The fix here is to add a new `MP_TYPE_FLAG_SUBSCR_ALLOWS_STACK_SLICE`.
-
-    Native types should set this flag if their subscr method is guaranteed not
-
-    to hold on to a reference of the slice object.
-
-
-    Fixes issue #17733 (see also #17723).
-
-
     Signed-off-by: Damien George <damien@micropython.org>'
 - proj: micropython
   issue: 17815
@@ -902,7 +853,6 @@
     \    aa\n\nFixes issue #17815.\n\nSigned-off-by: Jeff Epler <jepler@gmail.com>"
   msg_enhanced: null
   msg_reduced: "py/parse: Fix missing nlr_pop call in complex path of binary_op_maybe.\n\
-    \nReproducer (needs to be run as one compilation unit):\n\n    ans = (-1) ** 2.3\n\
     \    aa\n\nFixes issue #17815.\n\nSigned-off-by: Jeff Epler <jepler@gmail.com>"
 - proj: micropython
   issue: 17841
@@ -931,7 +881,7 @@
   msg_enhanced: 'extmod/vfs_reader: Check that open() resulted in a file-like object
     returned by a VFS `open()` method, to prevent a segmentation fault when `execfile()`
     attempts to process a non-file-like object.'
-  msg_reduced: 'extmod/vfs_reader: Check that open() resulted in a file-like object.
+  msg_reduced: 'extmod/vfs_reader: Check that open() resulted in a object.
 
 
     That is, an object whose type defines the protocol slot.
