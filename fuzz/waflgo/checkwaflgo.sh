@@ -28,6 +28,7 @@ for i in "${!COMMITS[@]}"; do
     id="#${issue}_${commit}"
     command=${COMMANDS[$i]}
     echo "Checking commit $id"
+    # NOTE: use buildafl as we do not measure reachability for fuzzing
     builddir_before=buildafl_before_$commit
     builddir_after=buildafl_after_$commit
 

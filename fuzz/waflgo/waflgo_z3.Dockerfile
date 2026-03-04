@@ -35,40 +35,32 @@ RUN apt-get update && apt-get install -y \
     tmux \
     ranger
 
-FROM base AS waflgo_jerryscript
+FROM base AS waflgo_z3
 
-# Set user same as host, can use `envsubst` to actually replace with env value
-# ARG UNAME=$USER
-# ARG UID=$UID
-# ARG GID=$GROUPS
-# RUN groupadd -g $GID -o $UNAME
-# RUN useradd -m -u $UID -g $GID -o -s /bin/bash $UNAME
-# USER $UNAME
+# Clone z3 to /home/
+RUN git clone https://github.com/Z3Prover/z3
 
-# Clone jerryscript to /home/
-RUN git clone https://github.com/jerryscript-project/jerryscript/
+# Clone unifuzz/seeds
+RUN git clone https://github.com/unifuzz/seeds
 
-# Copy seeds to /home/seeds/js
-COPY seeds/js/ /home/seeds/js/
-
-# Copy jerryscript.env to /home/
-COPY jerryscript.env ./
+# Copy z3.env to /home/
+COPY z3.env ./
 
 # Copy scripts
 COPY utils.sh ./
 COPY bwaflgo.sh ./
 
 # Specify commit as each Docker can only test one commit
-ARG commit=b7e3bae
+ARG commit=0f3c562
 ENV commit=$commit
 
-# Build jerryscript with WAFLGo under /home/jerryscript/buildwaflgo_$commit
-RUN ./bwaflgo.sh jerryscript.env $commit
+# Build z3 with WAFLGo under /home/z3/buildwaflgo_$commit
+RUN ./bwaflgo.sh z3.env $commit
 
 # avoid git permission problem on start
-RUN git config --global --add safe.directory /home/jerryscript
+RUN git config --global --add safe.directory /home/z3
 # avoid WAFLGo exit when seeds crash
 ENV AFL_SKIP_CRASHES=1
 # Run fuzz in tmux session
-WORKDIR /home/jerryscript
-CMD tmux new-session -d -s fuzz_$commit && tmux send-keys -t fuzz_$commit "timeout 24h bash -c 'source ../jerryscript.env && run_waflgo'" Enter && bash
+WORKDIR /home/z3
+CMD tmux new-session -d -s fuzz_$commit && tmux send-keys -t fuzz_$commit "timeout 24h bash -c 'source ../z3.env && run_waflgo'" Enter && bash

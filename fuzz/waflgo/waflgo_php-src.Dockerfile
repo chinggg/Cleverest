@@ -35,40 +35,40 @@ RUN apt-get update && apt-get install -y \
     tmux \
     ranger
 
-FROM base AS waflgo_jerryscript
+FROM base AS waflgo_php
 
-# Set user same as host, can use `envsubst` to actually replace with env value
-# ARG UNAME=$USER
-# ARG UID=$UID
-# ARG GID=$GROUPS
-# RUN groupadd -g $GID -o $UNAME
-# RUN useradd -m -u $UID -g $GID -o -s /bin/bash $UNAME
-# USER $UNAME
+# Clone php to /home/
+RUN git clone https://github.com/php/php-src
 
-# Clone jerryscript to /home/
-RUN git clone https://github.com/jerryscript-project/jerryscript/
+# Uninstall cmake from apt and install latest cmake with pip
+RUN apt-get remove -y cmake && \
+    pip install --upgrade cmake
 
-# Copy seeds to /home/seeds/js
-COPY seeds/js/ /home/seeds/js/
+# Install dependencies for php
+RUN apt-get update && apt-get install -y re2c libsqlite3-dev
 
-# Copy jerryscript.env to /home/
-COPY jerryscript.env ./
+# Copy seeds from php-src/tests to /home/seeds/php
+RUN mkdir -p /home/seeds/php && \
+    cp php-src/tests/basic/* /home/seeds/php/
+
+# Copy php.env to /home/
+COPY php.env ./
 
 # Copy scripts
 COPY utils.sh ./
 COPY bwaflgo.sh ./
 
 # Specify commit as each Docker can only test one commit
-ARG commit=b7e3bae
+ARG commit=5cb38e9
 ENV commit=$commit
 
-# Build jerryscript with WAFLGo under /home/jerryscript/buildwaflgo_$commit
-RUN ./bwaflgo.sh jerryscript.env $commit
+# Build php-src with WAFLGo under /home/php-src/buildwaflgo_$commit
+RUN ./bwaflgo.sh php.env $commit
 
 # avoid git permission problem on start
-RUN git config --global --add safe.directory /home/jerryscript
+RUN git config --global --add safe.directory /home/php-src
 # avoid WAFLGo exit when seeds crash
 ENV AFL_SKIP_CRASHES=1
 # Run fuzz in tmux session
-WORKDIR /home/jerryscript
-CMD tmux new-session -d -s fuzz_$commit && tmux send-keys -t fuzz_$commit "timeout 24h bash -c 'source ../jerryscript.env && run_waflgo'" Enter && bash
+WORKDIR /home/php-src
+CMD tmux new-session -d -s fuzz_$commit && tmux send-keys -t fuzz_$commit "timeout 24h bash -c 'source ../php.env && run_waflgo'" Enter && bash
