@@ -1,13 +1,22 @@
-# Anonymous Artifact for Cleverest
+# Cleverest - Artifact of FSE '26 paper "Evaluating LLM-based Regression Test Generation"
 
-Cleverest is a feedback-directed, zero-shot LLM-based regression test generation technique proposed in the paper "[Paper Title]". We evaluate its effectiveness on 72 commits of six subject programs: three already in WAFLGo dataset (Mujs, Libxml2, and Poppler) and five newly added programs (JerryScript, Z3, PHP, JQ and Micropython). This repository contains the implementation of Cleverest along with the dataset and instructions to reproduce the main results in the paper.
+Cleverest is a feedback-directed, zero-shot LLM-based regression test generation technique proposed in the paper "Evaluating LLM-based Regression Test Generation". We evaluate its effectiveness on 72 commits of six subject programs: three already in WAFLGo dataset (Mujs, Libxml2, and Poppler) and five newly added programs (JerryScript, Z3, PHP, JQ and Micropython). This repository contains the implementation of Cleverest along with the dataset and instructions to reproduce the main results in the paper.
 
 ## Citation
+
+The paper will be published by FSE 2026 with title "Evaluating LLM-based Regression Test Generation", while the first version of the preprint is available on [arXiv:2501.11086](https://arxiv.org/abs/2501.11086) with a different title "Can LLM Generate Regression Tests for Software Commits?".
 
 If you want to use Cleverest in your research or refer it, please use the following citation:
 
 ```bibtex
-[bibtext]
+@inproceedings{FSE26-llmtesting,
+  author       = {Liu, Jing and Lee, Seongmin and Losiouk, Eleonora and B{\"o}hme, Marcel},
+  title        = {Evaluating LLM-based Regression Test Generation},
+  year         = {2026},
+  booktitle    = {Proceedings of the ACM International Conference on the Foundations of Software Engineering},
+  series       = {FSE'26},
+  numpages     = {21},
+}
 ```
 
 The supplementary material is available at **[supp/supplementary.pdf](supp/supplementary.pdf)**.
