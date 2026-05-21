@@ -34,12 +34,12 @@ RUN apt-get install -y \
     libxslt-dev \
     libzip-dev
 
-# Set user
-ARG UNAME=$(whoami)
-ARG UID=1000
-ARG GID=1000
-RUN groupadd -g $GID -o $UNAME
-RUN useradd -m -u $UID -g $GID -o -s /bin/bash $UNAME
+# Set user to be same as host, avoid permission issues
+# ARG UNAME=$(whoami)
+# ARG UID=1000
+# ARG GID=1000
+# RUN groupadd -g $GID -o $UNAME
+# RUN useradd -m -u $UID -g $GID -o -s /bin/bash $UNAME
 
 # Install yq
 RUN wget https://github.com/mikefarah/yq/releases/download/v4.52.2/yq_linux_amd64.tar.gz && \
@@ -53,7 +53,7 @@ RUN wget https://github.com/mikefarah/yq/releases/download/v4.52.2/yq_linux_amd6
 # USER $UNAME
 
 # Copy scripts and environment files
-# COPY openai .
-# COPY *.sh .
-# COPY *.env .
+COPY openai .
+COPY *.sh .
+COPY *.env .
 WORKDIR /clever
