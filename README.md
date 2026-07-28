@@ -11,11 +11,12 @@ If you want to use Cleverest in your research or refer it, please use the follow
 ```bibtex
 @inproceedings{FSE26-llmtesting,
   author       = {Liu, Jing and Lee, Seongmin and Losiouk, Eleonora and B{\"o}hme, Marcel},
-  title        = {Evaluating LLM-based Regression Test Generation},
+  title        = {Evaluating LLM-Based Regression Test Generation},
   year         = {2026},
   booktitle    = {Proceedings of the ACM International Conference on the Foundations of Software Engineering},
   series       = {FSE'26},
-  numpages     = {21},
+  numpages     = {23},
+  doi          = {10.1145/3808129},
 }
 ```
 
